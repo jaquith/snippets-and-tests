@@ -8,7 +8,7 @@ const getVanillaJsFile = function (relativePathToRepoRoot) {
   return fse.readFileSync(path.join(__dirname, '../../', relativePathToRepoRoot), 'utf-8')
 }
 
-const runStringFunctions = (jsString, exportsArray, beforeExpression, afterExpression) => {
+const exportNamedElements = (jsString, exportsArray, beforeExpression, afterExpression) => {
   beforeExpression = beforeExpression || ''
   afterExpression = afterExpression || ''
   if (typeof exportsArray === 'string') {
@@ -22,5 +22,5 @@ const runStringFunctions = (jsString, exportsArray, beforeExpression, afterExpre
   return _eval(evalString)
 }
 
-exports.runStringFunctions = runStringFunctions
+exports.exportNamedElements = exportNamedElements
 exports.getVanillaJsFile = getVanillaJsFile

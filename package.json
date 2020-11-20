@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha ./node_modules/mocha/bin/mocha unit-tests/active/*",
-    "lint": "standard --fix"
+    "lint": "standard"
   },
   "repository": {
     "type": "git",

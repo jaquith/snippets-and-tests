@@ -2,16 +2,14 @@
 'use script'
 
 const chai = require('chai')
-
 const stringFunctions = require('../helpers/stringFunctions.js')
-
 const mathFunctions = stringFunctions.getVanillaJsFile('code/math-functions.js')
 
 let result
 
 describe('the eval solution', () => {
   it('should run without error', () => {
-    result = stringFunctions.runStringFunctions(mathFunctions, ['add', 'subtract', 'testString'])
+    result = stringFunctions.exportNamedElements(mathFunctions, ['add', 'subtract', 'testString'])
   })
 
   it('should allow a single function in a file to run', () => {
