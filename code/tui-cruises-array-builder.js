@@ -39,8 +39,6 @@
 }
 */
 
-// allows testing outside of TiQ, harmless inside TiQ
-var b = b || {}
 b = buildProductArrays(b)
 
 function buildProductArrays (b) {

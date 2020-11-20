@@ -2,12 +2,10 @@
 'use script'
 
 const chai = require('chai')
-
 const stringFunctions = require('../helpers/stringFunctions.js')
-
 const code = stringFunctions.getVanillaJsFile('code/tui-cruises-array-builder.js')
 
-const codeAsModule = stringFunctions.exportNamedElements(code, ['buildProductArrays'])
+const codeAsModule = stringFunctions.exportNamedElements(code, ['buildProductArrays'], 'var b = {};\n\n')
 
 const testObjectOneProduct = {
   shop_order_id: '1800009336', // Bestellnummer
