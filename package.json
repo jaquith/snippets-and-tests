@@ -1,0 +1,27 @@
+{
+  "name": "snippets-and-tests",
+  "version": "1.0.0",
+  "description": "A simple Mocha/Chai test setup for vanilla JS testing",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha ./node_modules/mocha/bin/mocha unit-tests/active/*",
+    "lint": "standard --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaquith/snippets-and-tests.git"
+  },
+  "author": "Caleb Jaquith",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jaquith/snippets-and-tests/issues"
+  },
+  "homepage": "https://github.com/jaquith/snippets-and-tests#readme",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eval": "^0.1.4",
+    "fs-extra": "^9.0.1",
+    "mocha": "^8.2.1",
+    "standard": "^16.0.3"
+  }
+}
