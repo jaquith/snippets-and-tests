@@ -19,14 +19,16 @@ describe('the lowercase querystring keys extension', () => {
       'qp.tesT2' : 'another_teSt',
       'qp.TestIng' : 'testinG',
       'cp.TestCookie' : 'TestCookie',
-      'qp.TESTQP' : '1234'
+      'qp.TESTQP' : '1234',
+      'qp.UTM_SOURCE' : 'Email'
     })).to.deep.equal({
       'test1' : 'a string',
       'test2' : true,
       'qp.test2' : 'another_teSt',
       'qp.testing' : 'testinG',
       'cp.TestCookie' : 'TestCookie',
-      'qp.testqp' : '1234'
+      'qp.testqp' : '1234',
+      'qp.utm_source' : 'Email'
     })
   })
 
