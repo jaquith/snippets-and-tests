@@ -32,7 +32,18 @@ const mathFunctions = stringFunctions.getVanillaJsFile('code/math-functions.js')
 
 Exports functions and constants from a target text snippet.  Also supports optional 'before' and 'after' snippets to allow you provide a wrapper.
 
-### Simple example, exporting two functions
+### Arguments
+
+ - **jsToTest** (required) - the JS snippet you want to test as a string
+
+ - **listOfExports** (required) - a list of the functions / variables you want to export from the snippet
+
+ - **beforeExpression** (optional) - a string to add before `jsToTest` to provide a wrapper
+
+ - **afterExpression** (optional) - a string to add after `jsToTest` (but before the export expressions) to provide a wrapper
+
+
+### Simple example, exporting two named functions
 
 ````javascript
 describe('math-functions.js', () => {
@@ -47,7 +58,7 @@ describe('math-functions.js', () => {
 })
 ````
 
-### Example providing a wrapper for a TiQ extension
+### Example providing a wrapper for a TiQ extension that is just an expression (not a function)
 
 In this case, we use the optional 'before' and 'after' expression arguments to `exportNamedElements` to provide a wrapper, since the code we want to test is just a expression, not a full function.
 
@@ -65,7 +76,17 @@ for (var i = 0, key; i < keys.length; i++) {
 `
 describe('the remove empty/undefined/null value extension', () => {
   it('should remove empty, null, and undefined values but leave others alone', () => {
-    const result = stringFunctions.exportNamedElements(cleanTheObject, ['theExtension'], 'function theExtension (b) {\n', '\nreturn b\n}')
+    // the expression as a string
+    const jsAsTextForTesting = cleanTheObject
+    // export the function we've wrapped the expression in
+    const listOfExports = ['theExtension']
+
+    // add a function wrapper around the whole expression to allow export and testing
+    const beforeExpression = 'function theExtension (b) {\n'
+    const afterExpression = '\nreturn b\n}'
+
+    // export and test
+    const result = stringFunctions.exportNamedElements(jsAsTextForTesting, listOfExports, beforeExpression, afterExpression)
     chai.expect(result.theExtension({
       'test1' : 'a string',
       'test2' : true,
