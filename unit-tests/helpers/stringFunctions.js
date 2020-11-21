@@ -16,7 +16,7 @@ const exportNamedElements = (jsString, exportsArray, beforeExpression, afterExpr
   }
   exportsArray = exportsArray || []
   exportsArray.forEach((element) => {
-    afterExpression = '\n\nexports.' + element + ' = ' + element + '\n\n' + afterExpression
+    afterExpression = afterExpression + '\n\nexports.' + element + ' = ' + element + '\n'
   })
   const evalString = `${beforeExpression}${jsString}${afterExpression}`
   return _eval(evalString)
