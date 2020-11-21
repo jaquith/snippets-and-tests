@@ -35,16 +35,15 @@ Exports functions and constants from a target text snippet.  Also supports optio
 ### Simple example, exporting two functions
 
 ````javascript
-describe('', () => {
-
-})
-it('should support addition and subtraction', () => {
-  const mathFunctions = stringFunctions.getVanillaJsFile('code/math-functions.js')
-  // export the 'add' and 'subtract' functions from the file to test them
-  const simpleFunctionExports = stringFunctions.exportNamedElements(mathFunctions, ['add', 'subtract'])
-  // test the functions
-  chai.expect(simpleFunctionExports.add(2, 7)).to.equal(9)
-  chai.expect(simpleFunctionExports.subtract(2, 7)).to.equal(-5)
+describe('math-functions.js', () => {
+  it('should support addition and subtraction', () => {
+    const mathFunctions = stringFunctions.getVanillaJsFile('code/math-functions.js')
+    // export the 'add' and 'subtract' functions from the file to test them
+    const simpleFunctionExports = stringFunctions.exportNamedElements(mathFunctions, ['add', 'subtract'])
+    // test the functions
+    chai.expect(simpleFunctionExports.add(2, 7)).to.equal(9)
+    chai.expect(simpleFunctionExports.subtract(2, 7)).to.equal(-5)
+  })
 })
 ````
 
@@ -64,7 +63,7 @@ for (var i = 0, key; i < keys.length; i++) {
   }
 }
 `
-describe('the remove empty/undefined/null value solution', () => {
+describe('the remove empty/undefined/null value extension', () => {
   it('should remove empty, null, and undefined values but leave others alone', () => {
     const result = stringFunctions.exportNamedElements(cleanTheObject, ['theExtension'], 'function theExtension (b) {\n', '\nreturn b\n}')
     chai.expect(result.theExtension({
