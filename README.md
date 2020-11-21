@@ -78,10 +78,10 @@ describe('the remove empty/undefined/null value extension', () => {
   it('should remove empty, null, and undefined values but leave others alone', () => {
     // the expression as a string
     const jsAsTextForTesting = cleanTheObject
-    // export the function we've wrapped the expression in
+    // export the wrapper functions
     const listOfExports = ['theExtension']
 
-    // add a function wrapper around the whole expression to allow export and testing
+    // add a wrapper function around the whole expression to allow export and testing
     const beforeExpression = 'function theExtension (b) {\n'
     const afterExpression = '\nreturn b\n}'
 
