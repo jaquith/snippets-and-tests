@@ -8,7 +8,7 @@ const lowercaseQuerystringKeys = stringFunctions.getVanillaJsFile('code/lowercas
 let result
 
 describe('the lowercase querystring keys extension', function () {
-  it('should run without error', function () {
+  it('should export without error', function () {
     result = stringFunctions.exportNamedElements(lowercaseQuerystringKeys, ['theExtension'], 'function theExtension (b) {\n', '\nreturn b\n}')
   })
 

@@ -20,7 +20,7 @@ describe('the eval solution', function () {
     this.clock.restore()
   })
 
-  it('should run without error', function () {
+  it('should export without error', function () {
     let before = 'function theWrapper(window, b) {\n\n'
     let after = 'return callAfterDelay(b)\n}'
     result = stringFunctions.exportNamedElements(code, ['theWrapper'], before, after)

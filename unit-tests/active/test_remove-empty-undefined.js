@@ -8,7 +8,7 @@ const removeFunction = stringFunctions.getVanillaJsFile('code/remove-empty-undef
 let result
 
 describe('the remove empty/undefined/null value solution', function () {
-  it('should run without error', function () {
+  it('should export without error', function () {
     result = stringFunctions.exportNamedElements(removeFunction, ['theExtension'], 'function theExtension (b) {\n', '\nreturn b\n}')
   })
 
