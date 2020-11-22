@@ -8,7 +8,7 @@ const code = stringFunctions.getVanillaJsFile('code/call-after-delay.js')
 
 let result
 
-describe('the eval solution', function () {
+describe('the callAfterDelay wrapper', function () {
   before(function () {
     this.jsdom = require('jsdom-global')()
     // console.log(window)
@@ -21,8 +21,8 @@ describe('the eval solution', function () {
   })
 
   it('should export without error', function () {
-    let before = 'function theWrapper(window, b) {\n\n'
-    let after = 'return callAfterDelay(b)\n}'
+    const before = 'function theWrapper(window, b) {\n\n'
+    const after = 'return callAfterDelay(b)\n}'
     result = stringFunctions.exportNamedElements(code, ['theWrapper'], before, after)
   })
 
