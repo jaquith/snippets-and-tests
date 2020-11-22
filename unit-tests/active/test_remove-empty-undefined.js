@@ -7,12 +7,12 @@ const removeFunction = stringFunctions.getVanillaJsFile('code/remove-empty-undef
 
 let result
 
-describe('the remove empty/undefined/null value solution', () => {
-  it('should run without error', () => {
+describe('the remove empty/undefined/null value solution', function () {
+  it('should run without error', function () {
     result = stringFunctions.exportNamedElements(removeFunction, ['theExtension'], 'function theExtension (b) {\n', '\nreturn b\n}')
   })
 
-  it('should remove empty, null, and undefined values but leave others alone', () => {
+  it('should remove empty, null, and undefined values but leave others alone', function () {
     chai.expect(result.theExtension({
       'test1' : 'a string',
       'test2' : true,

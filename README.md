@@ -46,8 +46,8 @@ Exports functions and constants from a target text snippet.  Also supports optio
 ### Simple example, exporting two named functions
 
 ````javascript
-describe('math-functions.js', () => {
-  it('should support addition and subtraction', () => {
+describe('math-functions.js', function () {
+  it('should support addition and subtraction', function () {
     const mathFunctions = stringFunctions.getVanillaJsFile('code/math-functions.js')
     // export the 'add' and 'subtract' functions from the file to test them
     const simpleFunctionExports = stringFunctions.exportNamedElements(mathFunctions, ['add', 'subtract'])
@@ -66,8 +66,8 @@ In this case, we use the optional 'before' and 'after' expression arguments to `
 // get the extension code as a string
 const cleanTheObject = stringFunctions.getVanillaJsFile('code/remove-empty-undefined-null.js')
 
-describe('the remove empty/undefined/null value extension', () => {
-  it('should remove empty, null, and undefined values but leave others alone', () => {
+describe('the remove empty/undefined/null value extension', function () {
+  it('should remove empty, null, and undefined values but leave others alone', function () {
     // the expression as a string
     const jsAsTextForTesting = cleanTheObject
     // export the wrapper functions

@@ -37,13 +37,13 @@ const testObjectPartialEntries = Object.assign({
   shop_order_product_3_quantity: '3.0000' // Artikelanzahl 2
 }, testObjectOneProduct)
 
-describe('the tui-cruises array converter', () => {
-  it('should be a function that returns simple objects (no relevant arrays) without changing them', () => {
+describe('the tui-cruises array converter', function () {
+  it('should be a function that returns simple objects (no relevant arrays) without changing them', function () {
     chai.expect(codeAsModule.buildProductArrays).to.be.a('function')
     chai.expect(codeAsModule.buildProductArrays({ test: 'test1' })).to.deep.equal({ test: 'test1' })
   })
 
-  it('should correctly generate the arrays for a single product', () => {
+  it('should correctly generate the arrays for a single product', function () {
     chai.expect(codeAsModule.buildProductArrays(testObjectOneProduct)).to.deep.equal({
       shop_order_id: '1800009336', // Bestellnummer
       shop_name: 'Mein Schiff ® Shop', // Shopname
@@ -57,7 +57,7 @@ describe('the tui-cruises array converter', () => {
     })
   })
 
-  it('should correctly generate the arrays for two products', () => {
+  it('should correctly generate the arrays for two products', function () {
     chai.expect(codeAsModule.buildProductArrays(testObjectTwoProducts)).to.deep.equal({
       shop_order_id: '1800009336', // Bestellnummer
       shop_name: 'Mein Schiff ® Shop', // Shopname
@@ -71,7 +71,7 @@ describe('the tui-cruises array converter', () => {
     })
   })
 
-  it('should correctly handle completely missing entries', () => {
+  it('should correctly handle completely missing entries', function () {
     chai.expect(codeAsModule.buildProductArrays(testObjectMissingEntries)).to.deep.equal({
       shop_order_id: '1800009336', // Bestellnummer
       shop_name: 'Mein Schiff ® Shop', // Shopname
@@ -85,7 +85,7 @@ describe('the tui-cruises array converter', () => {
     })
   })
 
-  it('should correctly handle completely missing entries', () => {
+  it('should correctly handle completely missing entries', function () {
     chai.expect(codeAsModule.buildProductArrays(testObjectPartialEntries)).to.deep.equal({
       shop_order_id: '1800009336', // Bestellnummer
       shop_name: 'Mein Schiff ® Shop', // Shopname

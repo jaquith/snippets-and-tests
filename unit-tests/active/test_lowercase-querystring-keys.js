@@ -7,12 +7,12 @@ const lowercaseQuerystringKeys = stringFunctions.getVanillaJsFile('code/lowercas
 
 let result
 
-describe('the lowercase querystring keys extension', () => {
-  it('should run without error', () => {
+describe('the lowercase querystring keys extension', function () {
+  it('should run without error', function () {
     result = stringFunctions.exportNamedElements(lowercaseQuerystringKeys, ['theExtension'], 'function theExtension (b) {\n', '\nreturn b\n}')
   })
 
-  it('should lowecase the keys of querystring parameters and leave the values intact', () => {
+  it('should lowecase the keys of querystring parameters and leave the values intact', function () {
     chai.expect(result.theExtension({
       'test1' : 'a string',
       'test2' : true,
