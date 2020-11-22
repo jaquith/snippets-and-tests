@@ -63,17 +63,9 @@ describe('math-functions.js', () => {
 In this case, we use the optional 'before' and 'after' expression arguments to `exportNamedElements` to provide a wrapper, since the code we want to test is just a expression, not a full function.
 
 ```javascript
-// this would be in a separate file in reality, just shown as a constant for illustration
-const cleanTheObject = `
-// remove null, empty, undefined
-var keys = Object.keys(b);
-for (var i = 0, key; i < keys.length; i++) {
-  key = keys[i];
-  if (b[key] === null ||  typeof b[key] === "undefined" || b[key] === "" || (typeof b[key] === 'string' && b[key].toLowerCase() === 'null')) {
-    delete b[key];
-  }
-}
-`
+// get the extension code as a string
+const cleanTheObject = stringFunctions.getVanillaJsFile('code/remove-empty-undefined-null.js')
+
 describe('the remove empty/undefined/null value extension', () => {
   it('should remove empty, null, and undefined values but leave others alone', () => {
     // the expression as a string
@@ -103,3 +95,36 @@ describe('the remove empty/undefined/null value extension', () => {
     })
   })
 ````
+
+### Illustration of function wrapper and expoerts
+
+In the above example, the extension string by itself isn't standalone.
+
+```javascript
+
+// remove null, empty, undefined
+var keys = Object.keys(b);
+for (var i = 0, key; i < keys.length; i++) {
+  key = keys[i];
+  if (b[key] === null || typeof b[key] === "undefined" || b[key] === "" || (typeof b[key] === 'string' && b[key].toLowerCase() === 'null')) {
+    delete b[key];
+  }
+}
+````
+After wrapping (the `beforeExpression` and `afterExpression`) and exports it becomes:
+
+````javascript
+function theExtension (b) {
+  // remove null, empty, undefined
+  var keys = Object.keys(b);
+  for (var i = 0, key; i < keys.length; i++) {
+    key = keys[i];
+    if (b[key] === null || typeof b[key] === "undefined" || b[key] === "" || (typeof b[key] === 'string' && b[key].toLowerCase() === 'null')) {
+      delete b[key];
+    }
+  }
+  return b
+}
+exports.theExtension = theExtension
+````
+...which allows export and testing.
