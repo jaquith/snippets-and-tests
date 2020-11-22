@@ -96,7 +96,7 @@ describe('the remove empty/undefined/null value extension', () => {
   })
 ````
 
-### Illustration of function wrapper and expoerts
+### Illustration of function wrapper and exports
 
 In the above example, the extension string by itself isn't standalone.
 
