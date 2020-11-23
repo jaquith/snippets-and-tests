@@ -85,7 +85,7 @@ describe('the tui-cruises array converter', function () {
     })
   })
 
-  it('should correctly handle completely missing entries', function () {
+  it('should correctly handle partially missing entries', function () {
     chai.expect(codeAsModule.buildProductArrays(testObjectPartialEntries)).to.deep.equal({
       shop_order_id: '1800009336', // Bestellnummer
       shop_name: 'Mein Schiff ® Shop', // Shopname
