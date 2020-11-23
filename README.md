@@ -58,9 +58,44 @@ describe('math-functions.js', function () {
 })
 ````
 
-### Example providing a wrapper for a TiQ extension that is just an expression (not a function)
+----
 
-In this case, we use the optional 'before' and 'after' expression arguments to `exportNamedElements` to provide a wrapper, since the code we want to test is just a expression, not a full function.
+# Illustration of wrapper function and exports
+
+In the above example, the code was already inside named functions, so they could be easily exported.
+
+If the JS you want to test isn't already inside a named function, you can add your own wrapper, like this:
+
+````javascript
+// remove null, empty, undefined
+var keys = Object.keys(b);
+for (var i = 0, key; i < keys.length; i++) {
+  key = keys[i];
+  if (b[key] === null || typeof b[key] === "undefined" || b[key] === "" || (typeof b[key] === 'string' && b[key].toLowerCase() === 'null')) {
+    delete b[key];
+  }
+}
+````
+
+After wrapping (with `function theExtension (b) {\n` as the `beforeExpression` and `\nreturn b\n}` as the `afterExpression`), and exporting the same function from our wrapper, we can get:
+
+````javascript
+function theExtension (b) {
+  // remove null, empty, undefined
+  var keys = Object.keys(b);
+  for (var i = 0, key; i < keys.length; i++) {
+    key = keys[i];
+    if (b[key] === null || typeof b[key] === "undefined" || b[key] === "" || (typeof b[key] === 'string' && b[key].toLowerCase() === 'null')) {
+      delete b[key];
+    }
+  }
+  return b
+}
+exports.theExtension = theExtension
+````
+...which allows export and testing.
+
+Here's the code:
 
 ````javascript
 // get the extension code as a string
@@ -95,40 +130,3 @@ describe('the remove empty/undefined/null value extension', function () {
     })
   })
 ````
-
-----
-
-# Illustration of wrapper function and exports
-
-In the above example, the code is already inside named functions, so we can just export them.
-
-If the JS you want to test isn't already inside a named function, you can add your own wrapper, like this:
-
-````javascript
-// remove null, empty, undefined
-var keys = Object.keys(b);
-for (var i = 0, key; i < keys.length; i++) {
-  key = keys[i];
-  if (b[key] === null || typeof b[key] === "undefined" || b[key] === "" || (typeof b[key] === 'string' && b[key].toLowerCase() === 'null')) {
-    delete b[key];
-  }
-}
-````
-
-After wrapping (with `function theExtension (b) {\n` as the `beforeExpression` and `\nreturn b\n}` as the `afterExpression`), and exporting the same function from our wrapper, we get:
-
-````javascript
-function theExtension (b) {
-  // remove null, empty, undefined
-  var keys = Object.keys(b);
-  for (var i = 0, key; i < keys.length; i++) {
-    key = keys[i];
-    if (b[key] === null || typeof b[key] === "undefined" || b[key] === "" || (typeof b[key] === 'string' && b[key].toLowerCase() === 'null')) {
-      delete b[key];
-    }
-  }
-  return b
-}
-exports.theExtension = theExtension
-````
-...which allows export and testing.
