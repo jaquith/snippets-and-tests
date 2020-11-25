@@ -20,6 +20,7 @@ describe('the lowercase querystring keys extension', function () {
       'qp.TestIng' : 'testinG',
       'cp.TestCookie' : 'TestCookie',
       'qp.TestQP' : '1234',
+      'qp.alreadylower' : '5678',
       'qp.UTM_Source' : 'Email'
     })).to.deep.equal({
       'test1' : 'a string',
@@ -27,6 +28,7 @@ describe('the lowercase querystring keys extension', function () {
       'qp.test2' : 'another_teSt',
       'qp.testing' : 'testinG',
       'cp.TestCookie' : 'TestCookie',
+      'qp.alreadylower' : '5678',
       'qp.testqp' : '1234',
       'qp.utm_source' : 'Email'
     })

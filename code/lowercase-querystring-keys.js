@@ -8,6 +8,8 @@ for (i = 0; i < keys.length; i++) {
     // lowercase the keys, not the values
     udoString = "qp." + match[1];
     b[udoString.toLowerCase()] = b[udoString]
-    delete b[udoString];
+    if (udoString.toLowerCase() !== udoString) {
+      delete b[udoString];
+    }
   }
 }
