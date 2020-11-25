@@ -1,5 +1,5 @@
 /* global describe, it */
-'use script'
+'use strict'
 
 const chai = require('chai')
 const stringFunctions = require('../helpers/stringFunctions.js')
