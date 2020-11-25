@@ -14,19 +14,18 @@ describe('the remove empty/undefined/null value solution', function () {
 
   it('should remove empty, null, and undefined values but leave others alone', function () {
     chai.expect(result.theExtension({
-      'test1' : 'a string',
-      'test2' : true,
-      'test3' : undefined,
-      'test4' : 17.5,
-      'test5' : '',
-      'test6' : null,
-      'test7' : 'Null',
-      'test8' : 'null'
+      test1: 'a string',
+      test2: true,
+      test3: undefined,
+      test4: 17.5,
+      test5: '',
+      test6: null,
+      test7: 'Null',
+      test8: 'null'
     })).to.deep.equal({
-      'test1' : 'a string',
-      'test2' : true,
-      'test4' : 17.5
+      test1: 'a string',
+      test2: true,
+      test4: 17.5
     })
   })
-
 })

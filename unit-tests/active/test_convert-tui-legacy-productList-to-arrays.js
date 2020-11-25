@@ -2,34 +2,34 @@
 'use strict'
 
 const chai = require('chai')
+chai.use(require('dirty-chai'))
 const stringFunctions = require('../helpers/stringFunctions.js')
 const code = stringFunctions.getVanillaJsFile('code/convert-tui-legacy-productList-to-arrays.js')
 
 let exported
 
 const flattenerRaw = stringFunctions.getVanillaJsFile('code/tealium-flattener.js')
-let before = 'function getTealFlattener() { var window = {};\nvar teal = {}\n'
-let after = '\nreturn teal;\n}'
-let flattenerExport = stringFunctions.exportNamedElements(flattenerRaw, ['getTealFlattener'], before, after)
+const before = 'function getTealFlattener() { var window = {};\nvar teal = {}\n'
+const after = '\nreturn teal;\n}'
+const flattenerExport = stringFunctions.exportNamedElements(flattenerRaw, ['getTealFlattener'], before, after)
 // the flattener object itself
-let teal = flattenerExport.getTealFlattener()
+const teal = flattenerExport.getTealFlattener()
 
-describe('the flattener from the TLC', function (){
+describe('the flattener from the TLC', function () {
   it('should flatten', function () {
     chai.expect(teal).to.be.an('object')
     chai.expect(teal.flattenObject).to.be.a('function')
     chai.expect(teal.flattenObject({
-      nested : {
+      nested: {
         more_nesting: 'true'
       }
     })).to.deep.equal({
-      'nested.more_nesting' : 'true'
+      'nested.more_nesting': 'true'
     })
   })
 })
 
 describe('the legacy_productList reformatter', function () {
-
   it('should export without error', function () {
     const before = 'function theWrapper(teal, b) {\n\n'
     const after = '\nreturn b;\n}'
@@ -37,44 +37,44 @@ describe('the legacy_productList reformatter', function () {
   })
 
   it('should correctly add the arrays without removing anything', function () {
-    let b = {
-      'someKey' : 'someVal',
-      'legacy_productList' : [
+    const b = {
+      someKey: 'someVal',
+      legacy_productList: [
         {
-          "list": "Search Term",
-          "metric1": "2",
-          "productID": "Any Geo",
-          "productName": "Any Geo"
+          list: 'Search Term',
+          metric1: '2',
+          productID: 'Any Geo',
+          productName: 'Any Geo'
         },
         {
-          "productID": "H002767",
-          "productName": "Cinco Plazas Apartments",
-          "geo": {
-            "geoStructure": "Spain|Lanzarote|Puerto del Carmen"
+          productID: 'H002767',
+          productName: 'Cinco Plazas Apartments',
+          geo: {
+            geoStructure: 'Spain|Lanzarote|Puerto del Carmen'
           },
-          "list":"Search Results"
+          list: 'Search Results'
         },
         {
-          "productID": "H015343",
-          "productName": "TUI MAGIC LIFE Fuerteventura",
-          "geo": {
-            "geoStructure": "Spain|Fuerteventura|Jandia"
+          productID: 'H015343',
+          productName: 'TUI MAGIC LIFE Fuerteventura',
+          geo: {
+            geoStructure: 'Spain|Fuerteventura|Jandia'
           },
-          "list":"Search Results"
+          list: 'Search Results'
         }
       ]
     }
-    let result = exported.theWrapper(teal, b)
+    const result = exported.theWrapper(teal, b)
 
     chai.expect(result['legacy_productList.geo.geoStructure']).to.have.lengthOf(3)
     // this is a sparse array with an empty first entry
-    chai.expect(result['legacy_productList.geo.geoStructure'][0]).to.be.undefined
+    chai.expect(result['legacy_productList.geo.geoStructure'][0]).to.be.undefined()
     chai.expect(result['legacy_productList.geo.geoStructure'][1]).to.equal('Spain|Lanzarote|Puerto del Carmen')
     chai.expect(result['legacy_productList.geo.geoStructure'][2]).to.equal('Spain|Fuerteventura|Jandia')
 
     // not a sparse array, but shorter than the rest (so also sparse in a way)
     chai.expect(result['legacy_productList.metric1']).to.have.lengthOf(1)
-    chai.expect(result['legacy_productList.metric1'][0]).to.equal("2")
+    chai.expect(result['legacy_productList.metric1'][0]).to.equal('2')
 
     // doesn't work right now, not sure how to represent sparse arrays in the tests.
     /*
@@ -112,5 +112,4 @@ describe('the legacy_productList reformatter', function () {
     })
     */
   })
-
 })

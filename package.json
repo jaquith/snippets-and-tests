@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha ./node_modules/mocha/bin/mocha unit-tests/active/*",
-    "lint": "standard"
+    "lint": "standard unit-tests/active/* --fix"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
   "homepage": "https://github.com/jaquith/snippets-and-tests#readme",
   "devDependencies": {
     "chai": "^4.2.0",
+    "dirty-chai": "^2.0.1",
     "eval": "^0.1.4",
     "fs-extra": "^9.0.1",
     "jsdom": "^16.4.0",

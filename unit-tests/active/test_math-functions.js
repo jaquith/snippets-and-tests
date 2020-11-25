@@ -15,5 +15,4 @@ describe('the eval solution', function () {
   it('should allow a single function in a file to run', function () {
     chai.expect(result.add(2, 5)).to.equal(7)
   })
-
 })

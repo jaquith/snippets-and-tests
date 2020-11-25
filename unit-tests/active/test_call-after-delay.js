@@ -1,4 +1,4 @@
-/* global describe, it */
+/* global describe, it, before, after */
 'use strict'
 
 const chai = require('chai')
@@ -14,7 +14,7 @@ describe('the callAfterDelay wrapper', function () {
     // console.log(window)
     this.clock = sinon.useFakeTimers()
   })
-   
+
   after(function () {
     this.jsdom()
     this.clock.restore()
@@ -24,10 +24,11 @@ describe('the callAfterDelay wrapper', function () {
     const before = 'function theWrapper(window, b) {\n\n'
     const after = 'return callAfterDelay(b)\n}'
     result = stringFunctions.exportNamedElements(code, ['theWrapper'], before, after)
+    chai.expect(result).to.be.an('object').with.key('theWrapper')
   })
 
   it('should call a test function after 2 seconds', function () {
-    let testStub = sinon.stub()
+    const testStub = sinon.stub()
     result.theWrapper(window, testStub)
     sinon.assert.notCalled(testStub)
     this.clock.tick(2000)
