@@ -12,7 +12,7 @@ describe('the lowercase querystring keys extension', function () {
     result = stringFunctions.exportNamedElements(lowercaseQuerystringKeys, ['theExtension'], 'function theExtension (b) {\n', '\nreturn b\n}')
   })
 
-  it('should lowecase the keys of querystring parameters and leave the values intact', function () {
+  it('should lowecase the keys of querystring parameters and leave other values intact', function () {
     chai.expect(result.theExtension({
       'test1' : 'a string',
       'test2' : true,
