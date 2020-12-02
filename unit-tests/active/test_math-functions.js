@@ -7,7 +7,7 @@ const mathFunctions = stringFunctions.getVanillaJsFile('code/math-functions.js')
 
 let result
 
-describe('the eval solution', function () {
+describe('the eval solution itself, when exporting simple functions', function () {
   it('should export without error', function () {
     result = stringFunctions.exportNamedElements(mathFunctions, ['add', 'subtract'])
   })

@@ -4406,6 +4406,34 @@ function addUnconditionalEnsightenVariables (originalB) {
     logError(e)
   }
 
+  b["departureDate YYYYMMDD"] = (function() {
+    try {
+      var returnVal = 'none';
+      // function for returning Departure Date, used in Adobe Departure Date (evar14). Copied from Tag "WA - SiteCat Page Code" on 28/09/17
+      if (typeof b.departureDate === 'string') {
+        var splitDate = b.departureDate.split('/')
+        var year = splitDate[2] && splitDate[2].length === 4 && splitDate[2]
+        var month = splitDate[1] && splitDate[1].length === 2 && splitDate[1]
+        var day = splitDate[0] && splitDate[0].length === 2 && splitDate[0]
+        if (year && month && day) {
+          return year + month + day
+        }
+        // sometimes the day isn't selected (like cruises)
+        if (year && month) {
+          return year + month
+        }
+      }
+      return returnVal
+    } catch (err) {
+      return returnVal;
+    }
+  })()
+
+  /*
+  Doesn't seem to work correctly on https://www.tui.co.uk/cruise/bookitineraries/Mediterranean-Medley-101129?itineraryCodeOne=101129&itineraryCodeTwo=&shipCode=150012&mc=false&isMCTracs=false&isStayBefore=false&stayDuration=0&cruiseDuration=7&duration=1-7&noOfAdults=2&noOfChildren=0&childrenAge=&from[]=BOH:Airport&to[]=101129:Itinerary&flexibility=false&noOfSeniors=0&when=12-10-2021&sailingDate=12Oct21&to[]=&packageId=16340190000001634030400000TOM620416346388000001634643300000TOM62051181672602/3/650/7ZI01&index=3&brandType=null&addAStay=0&cabin[]=1,2&dp=BOH&bb=AI&cabinOnly=false&mcId=101129|T&searchVariant=FLY_CRUISE_ATCOM
+
+  Attempting to replace it
+
   try {
     b["departureDate YYYYMMDD"] = (function() {
       try {
@@ -4439,6 +4467,8 @@ function addUnconditionalEnsightenVariables (originalB) {
   } catch (e) {
     logError(e)
   }
+
+  */
 
   try {
     b["departureDateDifference"] = (function() {
