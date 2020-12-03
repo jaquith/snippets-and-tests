@@ -64,7 +64,7 @@ describe('math-functions.js', function () {
 
 In the above example, the code was already inside named functions, so they could be easily exported.
 
-If the JS you want to test isn't already inside a named function, you can add your own wrapper, like this:
+But what if your code isn't already wrapped in functions?  Like this example Tealium iQ function:
 
 ````javascript
 // remove null, empty, undefined
@@ -76,6 +76,8 @@ for (var i = 0, key; i < keys.length; i++) {
   }
 }
 ````
+
+The answer is to 'wrap' that snippet into a function format before we export it.
 
 After wrapping (with `function theExtension (b) {\n` as the `beforeExpression` and `\nreturn b\n}` as the `afterExpression`), and exporting the same function from our wrapper, we can get:
 
