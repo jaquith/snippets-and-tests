@@ -1,18 +1,23 @@
+// Declare global variables for Standard JS (linter)
 /* global describe, it */
 'use strict'
 
 const chai = require('chai')
+chai.use(require('dirty-chai')) // appease the linter
 const stringFunctions = require('../helpers/stringFunctions.js')
 const lowercaseQuerystringKeys = stringFunctions.getVanillaJsFile('code/lowercase-querystring-keys.js')
 
+// declared outside of the tests so it can be shared among them
 let result
 
 describe('the lowercase querystring keys extension', function () {
   it('should export without error', function () {
-    result = stringFunctions.exportNamedElements(lowercaseQuerystringKeys, ['theExtension'], 'function theExtension (b) {\n', '\nreturn b\n}')
+    const before = 'function theExtension (b) {\n'
+    const after = '\nreturn b\n}'
+    result = stringFunctions.exportNamedElements(lowercaseQuerystringKeys, ['theExtension'], before, after)
   })
 
-  it('should lowecase the keys of querystring parameters and leave other values intact', function () {
+  it('should lowercase the keys of querystring parameters and leave other values intact', function () {
     chai.expect(result.theExtension({
       test1: 'a string',
       test2: true,

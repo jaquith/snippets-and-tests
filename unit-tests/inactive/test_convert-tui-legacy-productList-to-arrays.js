@@ -29,14 +29,14 @@ describe('the TUI legacy_productList reformatter', function () {
       })
     })
   })
-  
+
   describe('the legacy_productList reformatter itself', function () {
     it('should export without error', function () {
       const before = 'function theWrapper(teal, b) {\n\n'
       const after = '\nreturn b;\n}'
       exported = stringFunctions.exportNamedElements(code, ['theWrapper'], before, after)
     })
-  
+
     it('should correctly add the arrays without removing anything', function () {
       const b = {
         someKey: 'someVal',
@@ -66,17 +66,17 @@ describe('the TUI legacy_productList reformatter', function () {
         ]
       }
       const result = exported.theWrapper(teal, b)
-  
+
       chai.expect(result['legacy_productList.geo.geoStructure']).to.have.lengthOf(3)
       // this is a sparse array with an empty first entry
       chai.expect(result['legacy_productList.geo.geoStructure'][0]).to.be.undefined()
       chai.expect(result['legacy_productList.geo.geoStructure'][1]).to.equal('Spain|Lanzarote|Puerto del Carmen')
       chai.expect(result['legacy_productList.geo.geoStructure'][2]).to.equal('Spain|Fuerteventura|Jandia')
-  
+
       // not a sparse array, but shorter than the rest (so also sparse in a way)
       chai.expect(result['legacy_productList.metric1']).to.have.lengthOf(1)
       chai.expect(result['legacy_productList.metric1'][0]).to.equal('2')
-  
+
       // doesn't work right now, not sure how to represent sparse arrays in the tests.
       /*
       chai.expect(result).to.deep.equal({
@@ -114,6 +114,4 @@ describe('the TUI legacy_productList reformatter', function () {
       */
     })
   })
-  
 })
-

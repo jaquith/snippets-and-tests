@@ -29,7 +29,7 @@ describe('the addMappingsWithAutomator function', function () {
     const csv = 'creditNoteCode,eVar49\ncreditNoteCode,prop49\n,\nLock Your Price Available,eVar209'
     const utui = {}
     utui.automator = {}
-    utui.automator.addMapping  = sinon.stub()
+    utui.automator.addMapping = sinon.stub()
     result.addMappingsWithAutomator(6, csv, utui.automator)
     sinon.assert.calledOnceWithExactly(utui.automator.addMapping, 6, [
       {
