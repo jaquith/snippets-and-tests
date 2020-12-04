@@ -22,8 +22,8 @@ describe('the negateRegex function', function () {
   })
 
   it('the regexes should work correctly', function () {
-    let re = /^test$/
-    let negated = result.negateRegex(re)
+    const re = /^test$/
+    const negated = result.negateRegex(re)
     let testString = 'test'
     chai.expect(re.test(testString), 'first start Regex mismatch').to.equal(true)
     chai.expect(negated.test(testString), 'first negation failed').to.equal(false)
@@ -46,7 +46,4 @@ describe('the negateRegex function', function () {
     negated = result.negateRegex(re)
     chai.expect(negated).to.be.undefined()
   })
-
-
-
 })
