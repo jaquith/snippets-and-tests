@@ -3,8 +3,9 @@
 'use strict'
 
 const chai = require('chai')
+chai.use(require('dirty-chai'))
 const stringFunctions = require('../helpers/stringFunctions.js')
-const lowercaseQuerystringKeys = stringFunctions.getVanillaJsFile('code/negate-regex-string.js')
+const lowercaseQuerystringKeys = stringFunctions.getVanillaJsFile('code/negate-regex.js')
 
 // declared outside of the tests so it can be shared among them
 let result
