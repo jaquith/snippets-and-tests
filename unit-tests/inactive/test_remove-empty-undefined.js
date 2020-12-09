@@ -5,15 +5,15 @@ const chai = require('chai')
 const stringFunctions = require('../helpers/stringFunctions.js')
 const removeFunction = stringFunctions.getVanillaJsFile('code/remove-empty-undefined-null.js')
 
-let result
+let exported
 
 describe('the remove empty/undefined/null value solution', function () {
   it('should export without error', function () {
-    result = stringFunctions.exportNamedElements(removeFunction, ['theExtension'], 'function theExtension (b) {\n', '\nreturn b\n}')
+    exported = stringFunctions.exportNamedElements(removeFunction, ['theExtension'], 'function theExtension (b) {\n', '\nreturn b\n}')
   })
 
   it('should remove empty, null, and undefined values but leave others alone', function () {
-    chai.expect(result.theExtension({
+    chai.expect(exported.theExtension({
       test1: 'a string',
       test2: true,
       test3: undefined,

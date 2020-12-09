@@ -8,17 +8,17 @@ const stringFunctions = require('../helpers/stringFunctions.js')
 const lowercaseQuerystringKeys = stringFunctions.getVanillaJsFile('code/lowercase-querystring-keys.js')
 
 // declared outside of the tests so it can be shared among them
-let result
+let exported
 
 describe('the lowercase querystring keys extension', function () {
   it('should export without error', function () {
     const before = 'function theExtension (b) {\n'
     const after = '\nreturn b\n}'
-    result = stringFunctions.exportNamedElements(lowercaseQuerystringKeys, ['theExtension'], before, after)
+    exported = stringFunctions.exportNamedElements(lowercaseQuerystringKeys, ['theExtension'], before, after)
   })
 
   it('should lowercase the keys of querystring parameters and leave other values intact', function () {
-    chai.expect(result.theExtension({
+    chai.expect(exported.theExtension({
       test1: 'a string',
       test2: true,
       'qp.tesT2': 'another_teSt',

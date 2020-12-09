@@ -6,7 +6,7 @@ const sinon = require('sinon')
 const stringFunctions = require('../helpers/stringFunctions.js')
 const code = stringFunctions.getVanillaJsFile('code/add-mappings-from-csv.js')
 
-let result
+let exported
 
 describe('the addMappingsWithAutomator function', function () {
   before(function () {
@@ -21,8 +21,8 @@ describe('the addMappingsWithAutomator function', function () {
   })
 
   it('should export without error', function () {
-    result = stringFunctions.exportNamedElements(code, ['addMappingsWithAutomator'])
-    chai.expect(result).to.be.an('object').with.key('addMappingsWithAutomator')
+    exported = stringFunctions.exportNamedElements(code, ['addMappingsWithAutomator'])
+    chai.expect(exported).to.be.an('object').with.key('addMappingsWithAutomator')
   })
 
   it('should call the automator.addMappings function with a correctly filtered and formed set of arguments', function () {
@@ -30,7 +30,7 @@ describe('the addMappingsWithAutomator function', function () {
     const utui = {}
     utui.automator = {}
     utui.automator.addMapping = sinon.stub()
-    result.addMappingsWithAutomator(6, csv, utui.automator)
+    exported.addMappingsWithAutomator(6, csv, utui.automator)
     sinon.assert.calledOnceWithExactly(utui.automator.addMapping, 6, [
       {
         key: 'legacy_creditNoteCode',

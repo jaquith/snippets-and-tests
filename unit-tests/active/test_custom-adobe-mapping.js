@@ -8,7 +8,7 @@ const stringFunctions = require('../helpers/stringFunctions.js')
 const lowercaseQuerystringKeys = stringFunctions.getVanillaJsFile('code/custom-adobe-mapping.js')
 
 // declared outside of the tests so it can be shared among them
-let result
+let exported
 const u = { map: {} }
 let b = {}
 
@@ -16,7 +16,7 @@ describe('the augmentMap function', function () {
   it('should export without error', function () {
     const before = 'function augmentMap (b, u) {\n'
     const after = '\nreturn u.map\n}'
-    result = stringFunctions.exportNamedElements(lowercaseQuerystringKeys, ['augmentMap'], before, after)
+    exported = stringFunctions.exportNamedElements(lowercaseQuerystringKeys, ['augmentMap'], before, after)
   })
 
   it('should work correctly when the mapping is filled', function () {
@@ -29,7 +29,7 @@ describe('the augmentMap function', function () {
       'numberOfPax:*any*': 'event8',
       'somethingElse:value': 'should leave alone'
     }
-    chai.expect(result.augmentMap(b, u)).to.deep.equal({
+    chai.expect(exported.augmentMap(b, u)).to.deep.equal({
       adobeChannel: 'channel',
       adobeCampaign: 'campaign',
       'numberOfPax:4': 'event8,VALUE_event8',
@@ -45,7 +45,7 @@ describe('the augmentMap function', function () {
       'numberOfPax:*any*': 'event8',
       'somethingElse:value': 'should leave alone'
     }
-    chai.expect(result.augmentMap(b, u)).to.deep.equal({
+    chai.expect(exported.augmentMap(b, u)).to.deep.equal({
       adobeChannel: 'channel',
       adobeCampaign: 'campaign',
       'numberOfPax:*any*': 'event8',
