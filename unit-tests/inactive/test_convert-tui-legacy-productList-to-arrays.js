@@ -16,6 +16,7 @@ const flattenerExport = stringFunctions.exportNamedElements(flattenerRaw, ['getT
 const teal = flattenerExport.getTealFlattener()
 
 describe('the TUI legacy_productList reformatter', function () {
+
   describe('the flattener from the TLC', function () {
     it('should flatten', function () {
       chai.expect(teal).to.be.an('object')
@@ -65,7 +66,7 @@ describe('the TUI legacy_productList reformatter', function () {
           }
         ]
       }
-      const exported = exported.theWrapper(teal, b)
+      exported = exported.theWrapper(teal, b)
 
       chai.expect(exported['legacy_productList.geo.geoStructure']).to.have.lengthOf(3)
       // this is a sparse array with an empty first entry

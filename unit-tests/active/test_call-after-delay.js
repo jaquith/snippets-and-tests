@@ -28,7 +28,7 @@ describe('the callAfterDelay wrapper', function () {
   })
 
   it('should call a test function after 2 seconds', function () {
-    const testStub = sinon.stub()
+    const testStub = sinon.spy()
     exported.theWrapper(window, testStub)
     sinon.assert.notCalled(testStub)
     this.clock.tick(2000)
