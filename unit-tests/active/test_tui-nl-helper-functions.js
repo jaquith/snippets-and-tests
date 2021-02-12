@@ -9,10 +9,6 @@ const stringFunctions = require('../helpers/stringFunctions.js')
 const snippet = stringFunctions.getVanillaJsFile('code/tui-nl-helper-functions.js')
 
 
-//dataLayer.push(detailDatalayerOneWay)
-//dataLayer.push({event: 'tiq.load'})
-
-
 // declared outside of the tests so it can be shared among them
 let exported
 
