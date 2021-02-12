@@ -1,4 +1,4 @@
 // used to test our setTimeout and stubbing/spying/mocking capabilities
 function callAfterDelay (fn) {
-  window.setTimeout(fn, 2000)
+  window.setTimeout(fn, 20000)
 }

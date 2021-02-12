@@ -19,7 +19,36 @@ describe('the Adobe u.addEvent extension for TUI', function () {
     exported = stringFunctions.exportNamedElements(snippet, ['theExtension'], before, after)
   })
 
-  it('should run correctly with a simple positive case', function () {
+  it('should run correctly with a simple case with one event', function () {
+    let addEventStub = sinon.spy()
+
+    const u = {
+      data: {
+      },
+      addEvent: addEventStub
+    }
+    const b = {
+      'linkTrackVars': 'eVar48,prop48',
+      'linkTrackEvents': 'event500'
+    }
+
+    let response = exported.theExtension(u, b)
+    
+    chai.expect(response).to.deep.equal({
+      u: {
+        addEvent: addEventStub,
+        data: {}
+      },
+      b: {
+        'linkTrackVars': 'eVar48,prop48',
+        'linkTrackEvents': 'event500'
+      }
+    })
+    sinon.assert.calledOnce(addEventStub);
+    sinon.assert.calledWith(addEventStub, 'event500');
+  })
+
+  it('should run correctly with a simple case with two events', function () {
     let addEventStub = sinon.spy()
 
     const u = {
@@ -49,8 +78,7 @@ describe('the Adobe u.addEvent extension for TUI', function () {
     sinon.assert.calledWith(addEventStub, 'event501');
   })
 
-
-  it('should run correctly with a simple positive case with extra whitespace', function () {
+  it('should run correctly with a simple positive case with two events and extra whitespace', function () {
     let addEventStub = sinon.spy()
 
     const u = {
@@ -80,35 +108,6 @@ describe('the Adobe u.addEvent extension for TUI', function () {
     sinon.assert.calledWith(addEventStub, 'event501');
   })
 
-  it('should run correctly with a simple positive case with extra whitespace', function () {
-    let addEventStub = sinon.spy()
-
-    const u = {
-      data: {
-      },
-      addEvent: addEventStub
-    }
-    const b = {
-      'linkTrackVars': 'eVar48,prop48',
-      'linkTrackEvents': ' event500  , event501 '
-    }
-
-    let response = exported.theExtension(u, b)
-    
-    chai.expect(response).to.deep.equal({
-      u: {
-        addEvent: addEventStub,
-        data: {}
-      },
-      b: {
-        'linkTrackVars': 'eVar48,prop48',
-        'linkTrackEvents': ' event500  , event501 '
-      }
-    })
-    sinon.assert.calledTwice(addEventStub);
-    sinon.assert.calledWith(addEventStub, 'event500');
-    sinon.assert.calledWith(addEventStub, 'event501');
-  })
 
   it('should not do anything when the variable is missing', function () {
     let addEventStub = sinon.spy()
@@ -163,6 +162,5 @@ describe('the Adobe u.addEvent extension for TUI', function () {
     })
     sinon.assert.notCalled(addEventStub);
   })
-
 
 })

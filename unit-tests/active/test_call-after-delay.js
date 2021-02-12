@@ -27,11 +27,11 @@ describe('the callAfterDelay wrapper', function () {
     chai.expect(exported).to.be.an('object').with.key('theWrapper')
   })
 
-  it('should call a test function after 2 seconds', function () {
+  it('should call a test function after 20 seconds', function () {
     const testStub = sinon.spy()
     exported.theWrapper(window, testStub)
     sinon.assert.notCalled(testStub)
-    this.clock.tick(2000)
+    this.clock.tick(20000)
     sinon.assert.calledOnce(testStub)
   })
 })

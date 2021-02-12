@@ -1,5 +1,5 @@
 // enables console testing (but still works in Tealium iQ)
-var b = b || (utag && utag.data) || {}
+var b = b || {}
 
 var legacyPrefix = 'legacy_'
 
@@ -9,7 +9,6 @@ Bootstrapper.ensightenOptions = {}
 Bootstrapper.ensightenOptions.publishPath = b.tealium_environment === 'prod' ? 'hybrisprod' : 'hybrisdev';
 
 Bootstrapper.getQueryParam = function (qp_name) {
-  var b = b || {}
   return b['qp.' + qp_name] || ""
 }
 
@@ -32,7 +31,6 @@ function getCleanLegacyNameForLookup (longEnsightenName) {
 
 Bootstrapper.Cookies = {}
 Bootstrapper.Cookies.get = function (cookieName) {
-  var b = b || {}
   return b['cp.' + cookieName]
 }
 
