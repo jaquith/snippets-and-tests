@@ -11,7 +11,6 @@ const snippet = stringFunctions.getVanillaJsFile('code/tui-nl-helper-functions.j
 
 // declared outside of the tests so it can be shared among them
 let exported
-
 let undefinedVar
 
 describe('the TUI NL helper functions', function () {
