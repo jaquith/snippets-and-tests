@@ -22,6 +22,7 @@
     "chai-each": "0.0.1",
     "chai-like": "^1.1.1",
     "chai-things": "^0.2.0",
+    "deep-equal": "^2.0.5",
     "deep-equal-in-any-order": "^1.0.28",
     "dirty-chai": "^2.0.1",
     "eval": "^0.1.4",
