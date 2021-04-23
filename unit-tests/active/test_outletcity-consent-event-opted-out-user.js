@@ -11,7 +11,7 @@ chai.use(require('deep-equal-in-any-order'))
 const stringFunctions = require('../helpers/stringFunctions.js')
 
 const getExport = function (loggedIn) {
-  const code = stringFunctions.getVanillaJsFile('code/outletcity-consent-event-opted-out-user.html')
+  const code = stringFunctions.getVanillaJsFile('code/outletcity-consent-event-opted-out-user-v2.html')
   let cleanedCode = code.replace('<script type="text/javascript">', '')
   cleanedCode = cleanedCode.replace('</script>', '')
 
@@ -172,47 +172,15 @@ const getTest = function (opts) {
       dl.push(
         {
           "event": "consents_changed_finished",
-          "Optin": true,
-          "42ads": true,
-          "AWIN": true,
-          "Bing Ads": true,
-          "ChannelPilot": true,
-          "cloudfront.net": true,
-          "Criteo": true,
-          "Emarsys": true,
-          "epoq": true,
-          "Facebook Pixel": true,
-          "Facebook Connect": false,
-          "Fastly": true,
           "Fitanalytics": false,
-          "Google Ads": true,
-          "Google Analytics": true,
-          "Google Maps": false,
-          "Google OAuth": false,
-          "Google Tag Manager": true,
-          "Google Optimize": true,
-          "gstatic.com": true,
-          "Instagram Content": true,
-          "intelliAd Tracking": true,
-          "Mouseflow": true,
-          "Outbrain": true,
-          "reCAPTCHA": true,
-          "Sovendus": true,
-          "Usabilla": true,
-          "Usercentrics Consent Management Platform": true,
-          "YouTube Video": false,
-          "HI Share that": true,
-          "8SELECT": true,
-          "Outletcity classicPageViews": true,
-          "Outletcity _ocmr": true,
-          "Outletcity ocmAwP": true,
-          "Outletcity de.ocm.app-smartbanner-closed": true,
-          "Outletcity ocmAdP": true,
-          "Outletcity _ocmLast_context": true,
-          "Outletcity OCM_JSESSIONID": true,
-          "Outletcity _ocmz": true,
-          "Tealium Inc": finalTealiumConsentState,
           "gtm.uniqueEventId": 26
+        }
+      )
+      dl.push(
+        {
+          "event": "consents_changed_finished",
+          "Tealium Inc": finalTealiumConsentState,
+          "gtm.uniqueEventId": 27
         }
       )
     }
@@ -320,7 +288,7 @@ describe('the outletcity consent event for opted out users GTM tag', function ()
   it('CONSENT UPDATE - should NOT fire in an opt-in case without cookie without login', getTest({
     finalTealiumConsentState: true,
     hasCookie: false, 
-    loggedIn: true, 
+    loggedIn: false, 
     isConsentChangeEvent: true, 
     shouldFire: false
   }))

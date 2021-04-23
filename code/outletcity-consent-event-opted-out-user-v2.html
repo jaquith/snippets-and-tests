@@ -38,9 +38,7 @@ if (!payload.customer_id || payload.customer_id === "undefined") {
 
 var cleanTealiumNameInUsercentrics = 'Tealium_Inc'
 
-// Find the consents_changed_finished event, then replace whitespace in the keys with underscores and add to the payload
-var consentChangeEvent = getConsentChangeFullDecision()
-var latestConsentChange =  consentChangeEvent || getLatestEventByName('consents_initialized')
+var latestConsentChange = getConsentChangeFullDecision()
 
 var keys = Object.keys(latestConsentChange)
 var cleanKey
