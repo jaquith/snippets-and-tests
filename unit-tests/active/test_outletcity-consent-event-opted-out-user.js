@@ -11,7 +11,7 @@ chai.use(require('deep-equal-in-any-order'))
 const stringFunctions = require('../helpers/stringFunctions.js')
 
 const getExport = function (loggedIn) {
-  const code = stringFunctions.getVanillaJsFile('code/outletcity-consent-event-opted-out-user-v2.html')
+  const code = stringFunctions.getVanillaJsFile('code/outletcity-consent-event-opted-out-user-v2.1.html')
   let cleanedCode = code.replace('<script type="text/javascript">', '')
   cleanedCode = cleanedCode.replace('</script>', '')
 

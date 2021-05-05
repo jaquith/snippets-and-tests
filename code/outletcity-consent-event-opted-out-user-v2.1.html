@@ -133,10 +133,11 @@ function getConsentChangeFullDecision () {
 // Returns undefined if not found 
 function getLatestEventByName (eventName) {
   if (!eventName) return false
+  var entry
   for (var i = dataLayer.length - 1; i > -1; i--) {
     if (dataLayer[i] && dataLayer[i].event === eventName) {
       // remove this, not always present, but not useful for our purposes
-      let entry =  JSON.parse(JSON.stringify(dataLayer[i]))
+      entry =  JSON.parse(JSON.stringify(dataLayer[i]))
       delete entry.usc_origin
       return entry
     }
