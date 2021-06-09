@@ -2,16 +2,137 @@
 /* global describe, it */
 'use strict'
 
+/***
+ * Unit tests for the 'Tealium Opt-Out Tag' for GTM/Usercentrics
+ * 
+ * We create a virtual DOM without a real browser, then strip the JS from the Custom HTML tag and inject it
+ * into that virtual DOM, after doing some string replacement to simulate GTM's variable population.  
+ * 
+ * That virtual DOM includes a window.dataLayer object to simulate various consent stages and scenarios quickly, and without
+ * needing a browser.
+ * 
+ * This test suite is intended to supplement integration tests with real browsers and GTM, not replace them.
+ */
+
 const chai = require('chai')
-const { option, opts } = require('commander')
 chai.use(require('chai-like'))
 chai.use(require('dirty-chai')) // appease the linter
 chai.use(require('deep-equal-in-any-order'))
 
 const stringFunctions = require('../helpers/stringFunctions.js')
 
-const getExport = function (loggedIn) {
-  const code = stringFunctions.getVanillaJsFile('code/gtm-tealium-opt-out-tag-v2.1.html')
+describe('the outletcity consent event for opted out users GTM tag', function () {
+  beforeEach(function () {
+    this.jsdom = require('jsdom-global')() // add globals like window, document, etc., as if in a browser
+  })
+
+  it('should export without error', function () {
+    // convert the Custom HTML Tag to JS, quick and dirty
+    const exported = getExport(false)
+    chai.expect(exported).to.be.an('object').with.key('fireConsentUpdate')
+  })
+
+  it('CONSENT UPDATE - should NOT fire in an opt-out case without cookie without login', getTest({
+    finalTealiumConsentState: false,
+    hasCookie: false, 
+    loggedIn: false, 
+    isConsentChangeEvent: true, 
+    shouldFire: false
+  }))
+
+  it('CONSENT UPDATE - should fire in an opt-out case without cookie WITH login', getTest({
+    finalTealiumConsentState: false,
+    hasCookie: false, 
+    loggedIn: true, 
+    isConsentChangeEvent: true, 
+    shouldFire: true
+  }))
+
+  it('CONSENT UPDATE - should fire in an opt-out case WITH cookie without login', getTest({
+    finalTealiumConsentState: false,
+    hasCookie: true, 
+    loggedIn: false, 
+    isConsentChangeEvent: true, 
+    shouldFire: true
+  }))
+
+  it('CONSENT UPDATE - should fire in an opt-out case WITH cookie WITH login', getTest({
+    finalTealiumConsentState: false,
+    hasCookie: true, 
+    loggedIn: true, 
+    isConsentChangeEvent: true, 
+    shouldFire: true
+  }))
+
+  it('CONSENT UPDATE - should NOT fire in an opt-in case without cookie without login', getTest({
+    finalTealiumConsentState: true,
+    hasCookie: false, 
+    loggedIn: false, 
+    isConsentChangeEvent: true, 
+    shouldFire: false
+  }))
+
+  it('CONSENT UPDATE - should NOT fire in an opt-in case without cookie WITH login', getTest({
+    finalTealiumConsentState: true,
+    hasCookie: true, 
+    loggedIn: true, 
+    isConsentChangeEvent: true, 
+    shouldFire: false
+  }))
+
+  it('CONSENT UPDATE - should NOT fire in an opt-in case WITH cookie without login', getTest({
+    finalTealiumConsentState: true,
+    hasCookie: true, 
+    loggedIn: false, 
+    isConsentChangeEvent: true, 
+    shouldFire: false
+  }))
+
+  it('CONSENT UPDATE - should NOT fire in an opt-in case WITH cookie WITH login', getTest({
+    finalTealiumConsentState: true,
+    hasCookie: true, 
+    loggedIn: true, 
+    isConsentChangeEvent: true, 
+    shouldFire: false
+  }))
+
+  it('LOGIN - should NOT fire in an opt-in case without cookie WITH login', getTest({
+    finalTealiumConsentState: true,
+    hasCookie: false, 
+    loggedIn: true, 
+    isConsentChangeEvent: false, 
+    shouldFire: false
+  }))
+
+  it('LOGIN - should NOT fire in an opt-in case WITH cookie WITH login', getTest({
+    finalTealiumConsentState: true,
+    hasCookie: true, 
+    loggedIn: true, 
+    isConsentChangeEvent: false, 
+    shouldFire: false
+  }))
+
+  it('LOGIN - should fire in an opt-out case without cookie WITH login', getTest({
+    finalTealiumConsentState: false,
+    hasCookie: false, 
+    loggedIn: true, 
+    isConsentChangeEvent: false, 
+    shouldFire: true
+  }))
+
+  it('LOGIN - should fire in an opt-out case WITH cookie WITH login', getTest({
+    finalTealiumConsentState: false,
+    hasCookie: true, 
+    loggedIn: true, 
+    isConsentChangeEvent: false, 
+    shouldFire: true
+  }))
+
+})
+
+// Convert the Custom HTML Tag to JS and do some string replacement to simulate GTM's variable population
+function getExport (loggedIn) {
+  const code = stringFunctions.getVanillaJsFile('code/gtm-tealium-opt-out-tag.html')
   let cleanedCode = code.replace('<script type="text/javascript">', '')
   cleanedCode = cleanedCode.replace('</script>', '')
 
@@ -31,7 +152,9 @@ const getExport = function (loggedIn) {
   return stringFunctions.exportNamedElements(cleanedCode, ['fireConsentUpdate'], before, after)
 }
 
-const getTest = function (opts) {
+// avoid repeating the same steps over and over with a single test-generating function that accepts options via argument
+// returns a function that includes chai assertions
+function getTest (opts) {
   opts = typeof opts === 'object' ? opts : {}
   let finalTealiumConsentState = opts.finalTealiumConsentState
   let hasCookie = opts.hasCookie
@@ -241,115 +364,3 @@ const getTest = function (opts) {
     chai.expect(dl).to.deep.equal(dlSnapshot)
   }
 }
-
-describe('the outletcity consent event for opted out users GTM tag', function () {
-  beforeEach(function () {
-    this.jsdom = require('jsdom-global')() // add globals like window, document, etc., as if in a browser
-  })
-
-  it('should export without error', function () {
-    // convert the Custom HTML Tag to JS, quick and dirty
-    const exported = getExport(false)
-    chai.expect(exported).to.be.an('object').with.key('fireConsentUpdate')
-  })
-
-  it('CONSENT UPDATE - should NOT fire in an opt-out case without cookie without login', getTest({
-    finalTealiumConsentState: false,
-    hasCookie: false, 
-    loggedIn: false, 
-    isConsentChangeEvent: true, 
-    shouldFire: false
-  }))
-
-  it('CONSENT UPDATE - should fire in an opt-out case without cookie WITH login', getTest({
-    finalTealiumConsentState: false,
-    hasCookie: false, 
-    loggedIn: true, 
-    isConsentChangeEvent: true, 
-    shouldFire: true
-  }))
-
-  it('CONSENT UPDATE - should fire in an opt-out case WITH cookie without login', getTest({
-    finalTealiumConsentState: false,
-    hasCookie: true, 
-    loggedIn: false, 
-    isConsentChangeEvent: true, 
-    shouldFire: true
-  }))
-
-  it('CONSENT UPDATE - should fire in an opt-out case WITH cookie WITH login', getTest({
-    finalTealiumConsentState: false,
-    hasCookie: true, 
-    loggedIn: true, 
-    isConsentChangeEvent: true, 
-    shouldFire: true
-  }))
-
-  it('CONSENT UPDATE - should NOT fire in an opt-in case without cookie without login', getTest({
-    finalTealiumConsentState: true,
-    hasCookie: false, 
-    loggedIn: false, 
-    isConsentChangeEvent: true, 
-    shouldFire: false
-  }))
-
-  it('CONSENT UPDATE - should NOT fire in an opt-in case without cookie WITH login', getTest({
-    finalTealiumConsentState: true,
-    hasCookie: true, 
-    loggedIn: true, 
-    isConsentChangeEvent: true, 
-    shouldFire: false
-  }))
-
-  it('CONSENT UPDATE - should NOT fire in an opt-in case WITH cookie without login', getTest({
-    finalTealiumConsentState: true,
-    hasCookie: true, 
-    loggedIn: false, 
-    isConsentChangeEvent: true, 
-    shouldFire: false
-  }))
-
-  it('CONSENT UPDATE - should NOT fire in an opt-in case WITH cookie WITH login', getTest({
-    finalTealiumConsentState: true,
-    hasCookie: true, 
-    loggedIn: true, 
-    isConsentChangeEvent: true, 
-    shouldFire: false
-  }))
-
-  it('LOGIN - should NOT fire in an opt-in case without cookie WITH login', getTest({
-    finalTealiumConsentState: true,
-    hasCookie: false, 
-    loggedIn: true, 
-    isConsentChangeEvent: false, 
-    shouldFire: false
-  }))
-
-  it('LOGIN - should NOT fire in an opt-in case WITH cookie WITH login', getTest({
-    finalTealiumConsentState: true,
-    hasCookie: true, 
-    loggedIn: true, 
-    isConsentChangeEvent: false, 
-    shouldFire: false
-  }))
-
-  it('LOGIN - should fire in an opt-out case without cookie WITH login', getTest({
-    finalTealiumConsentState: false,
-    hasCookie: false, 
-    loggedIn: true, 
-    isConsentChangeEvent: false, 
-    shouldFire: true
-  }))
-
-  it('LOGIN - should fire in an opt-out case WITH cookie WITH login', getTest({
-    finalTealiumConsentState: false,
-    hasCookie: true, 
-    loggedIn: true, 
-    isConsentChangeEvent: false, 
-    shouldFire: true
-  }))
-
-})
-
-
-
