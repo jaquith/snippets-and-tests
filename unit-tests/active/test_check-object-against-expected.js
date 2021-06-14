@@ -20,14 +20,12 @@ function getError (output) {
 }
 
 describe('the checkObjectAgainstExpected helper function', function () {
-
   it('should export without error', function () {
     exported = stringFunctions.exportNamedElements(code, ['checkObjectAgainstExpected'])
     chai.expect(exported).to.be.an('object').with.key('checkObjectAgainstExpected')
   })
 
   it('should work in a simple case WITHOUT violations', function () {
-
     const actual = {
       test1: {
         test2: 'testVal1'
@@ -128,7 +126,7 @@ describe('the checkObjectAgainstExpected helper function', function () {
       missing: {},
       unexpected: {
         'test3.test4': {
-          actual: 'not allowed',
+          actual: 'not allowed'
         }
       },
       incorrect: {}
@@ -240,7 +238,6 @@ describe('the checkObjectAgainstExpected helper function', function () {
   })
 
   it('should support regular expressions in the values - match', function () {
-
     const actual = {
       test1: {
         test2: 'this is an acceptable value because it has "test" in it'
@@ -260,7 +257,7 @@ describe('the checkObjectAgainstExpected helper function', function () {
   it('should support regular expressions without flags in the keys for exclusions', function () {
     const actual = {
       test1: {
-        test3: undefined, // fine, undefined is considered excluded
+        test1: undefined, // fine, undefined is considered excluded
         test2: '', // fine, empty strings are also considered excluded
         test3: 'not allowed', // this parameter is not allowed
         test4: 'also not allowed'
@@ -295,7 +292,7 @@ describe('the checkObjectAgainstExpected helper function', function () {
         test3: undefined, // fine, undefined is considered excluded
         test2: '', // fine, empty strings are also considered excluded
         TEST3: 'not allowed',
-        test4: 'also not allowed' 
+        test4: 'also not allowed'
       },
       test4: {
         test5: 'totally fine'
@@ -311,16 +308,16 @@ describe('the checkObjectAgainstExpected helper function', function () {
       missing: {},
       unexpected: {
         'test1.TEST3': {
-          actual: 'not allowed',
+          actual: 'not allowed'
         },
         'test1.test4': {
-          actual: 'also not allowed',
+          actual: 'also not allowed'
         }
       },
       incorrect: {}
     })
   })
-  
+
   it('should support regular expressions with length checks - pass', function () {
     const actual = {
       test1: {
@@ -351,7 +348,7 @@ describe('the checkObjectAgainstExpected helper function', function () {
     chai.expect(output, getError(output)).to.deep.equalInAnyOrder({
       missing: {},
       incorrect: {
-        'test1.test2' : {
+        'test1.test2': {
           actual: 'totally fine?',
           expected: 'match with regular expression - /^[a-zA-Z0-9-.,;_&:\\s]{1,300}$/'
         }
@@ -375,7 +372,7 @@ describe('the checkObjectAgainstExpected helper function', function () {
     chai.expect(output, getError(output)).to.deep.equalInAnyOrder({
       missing: {},
       incorrect: {
-        'test1.test2' : {
+        'test1.test2': {
           actual: '1234567890 ',
           expected: 'match with regular expression - /^[a-zA-Z0-9-.,;_&:\\s]{1,10}$/'
         }

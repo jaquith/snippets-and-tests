@@ -14,34 +14,33 @@ const code = stringFunctions.getVanillaJsFile('code/get-duration-hours.js')
 let exported
 
 describe('the getDurationHours helper function', function () {
-
   it('should export without error', function () {
     exported = stringFunctions.exportNamedElements(code, ['getDurationHours'])
     chai.expect(exported).to.be.an('object').with.key('getDurationHours')
   })
 
   it('should work in a simple case', function () {
-    let output = exported.getDurationHours('2022-12-11', '05:01', '2022-12-11', '07:00')
+    const output = exported.getDurationHours('2022-12-11', '05:01', '2022-12-11', '07:00')
     chai.expect(output).to.equal('01:59')
   })
 
   it('should work in another simple case', function () {
-    let output = exported.getDurationHours('2022-12-11', '10:55', '2022-12-11', '17:05')
+    const output = exported.getDurationHours('2022-12-11', '10:55', '2022-12-11', '17:05')
     chai.expect(output).to.equal('06:10')
   })
 
   it('should work in yet another simple case', function () {
-    let output = exported.getDurationHours('2022-12-11', '10:55', '2022-12-11', '16:56')
+    const output = exported.getDurationHours('2022-12-11', '10:55', '2022-12-11', '16:56')
     chai.expect(output).to.equal('06:01')
   })
 
   it('should work if the range spans multiple days - more complex case', function () {
-    let output = exported.getDurationHours('2022-02-11', '23:00', '2022-02-12', '03:31')
+    const output = exported.getDurationHours('2022-02-11', '23:00', '2022-02-12', '03:31')
     chai.expect(output).to.equal('04:31')
   })
 
   it('should work if the range spans multiple days - much more complex case', function () {
-    let output = exported.getDurationHours('2022-02-11', '23:00', '2022-02-13', '03:31')
+    const output = exported.getDurationHours('2022-02-11', '23:00', '2022-02-13', '03:31')
     chai.expect(output).to.equal('28:31')
   })
 

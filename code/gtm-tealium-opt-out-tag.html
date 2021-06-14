@@ -1,4 +1,5 @@
 <script type="text/javascript">
+(function avoidGlobalScopeUnlessExplicit () {
 
 /*
 
@@ -23,23 +24,38 @@ TRIGGER: on consent change event and login events
 
 ----
 
-VERSION: 1.0
+VERSION: 1.1
+
+----
+CHANGES: 
+
+ 1.1 
+  - Improve event name configuration, add support for multiple update event names
+  - Add 'avoidGlobalScopedUnlessExplicit' wrapper
+ 1.0 
+  - Initial version
 
 */
 
 var payload = {}
 
 // Start config
-payload.tealium_account = '{{Constant - Tealium - Account ID}}'
-payload.tealium_profile = '{{Lookup - Tealium - Profile}}'
-
-payload.tealium_event = 'consents_changed_finished'
+payload.tealium_account = '{{Tealium Account Name}}'
+payload.tealium_profile = '{{Tealium Profile Name}}'
 
 var customerIdPropertyNameInPayload = 'customer_id'
-payload[customerIdPropertyNameInPayload] = '{{DL - customer - customerID}}'
+payload[customerIdPropertyNameInPayload] = '{{Customer ID}}'
 
+// The Service Name for Tealium AudienceStream in Usercentrics
 // Replace any whitespace with an underscore
 var cleanTealiumNameInUsercentrics = 'Tealium_Inc'
+
+// the value to use in the outgoing event
+payload.tealium_event = 'consents_changed_tealium_opt_out'
+
+var initializationEventName = 'consents_initialized'
+var updateEventNames = ['consents_changed_finished', 'consents_changed_finished_custom_rename']
+
 // End config
 
 // Will be undefined if no cookie is found
@@ -132,11 +148,11 @@ function getExistingCookieId() {
 }
 
 function getConsentChangeFullDecision () {
-  var oldDecision = getLatestEventByName('consents_initialized')
+  var oldDecision = getLatestEventByName(initializationEventName)
   var foundConsentChange = oldDecision
   // go from oldest to newest this time, to make sure all updates are correctly captured
   for (var i = 0, entry, keys, values; i < dataLayer.length; i++) {
-    if (dataLayer[i] && dataLayer[i].event === 'consents_changed_finished') {
+    if (dataLayer[i] && updateEventNames.indexOf(dataLayer[i].event) !== -1) {
       entry =  JSON.parse(JSON.stringify(dataLayer[i]))
       keys = Object.keys(entry)
       values = Object.values(entry)
@@ -163,5 +179,6 @@ function getLatestEventByName (eventName) {
   return false
 }
 
-
+// end the 'avoidGlobalScopeUnlessExplicit' wrapper
+})()
 </script>

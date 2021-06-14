@@ -4,7 +4,7 @@
   "description": "A simple Mocha/Chai test setup for vanilla JS testing",
   "main": "index.js",
   "scripts": {
-    "test": "mocha ./node_modules/mocha/bin/mocha unit-tests/active/*",
+    "test": "mocha ./node_modules/mocha/bin/mocha -- unit-tests/active/*",
     "lint": "standard unit-tests/active/* --fix"
   },
   "repository": {
