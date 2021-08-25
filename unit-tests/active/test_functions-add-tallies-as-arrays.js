@@ -166,11 +166,11 @@ let exampleVisitorProfile = {
 
 describe('the addTallies function, testing for use in Tealium Functions', function () {
   it('should export without error', function () {
-    exported = stringFunctions.exportNamedElements(code, ['addTallies'])
+    exported = stringFunctions.exportNamedElements(code, ['addTalliesToEventPayload'])
   })
 
   it('should work correctly', function () {
-    let result = exported.addTallies({'test_existing_key' : true}, exampleVisitorProfile.visitor)
+    let result = exported.addTalliesToEventPayload({'test_existing_key' : true}, exampleVisitorProfile.visitor)
     chai.expect(result).to.deep.equal({
       test_existing_key: true,
       tally_channels_watched_lifetime_keys: [
