@@ -164,12 +164,62 @@ let exampleVisitorProfile = {
   }
 }
 
+let exampleVisitorProfileNoTallies = {
+  "transactionId": "583531ec-0b67-4309-8a9d-e673aa0f6346",
+  "live": false,
+  "visitor": {
+    "metrics": {
+      "Total direct visits": 1,
+      "Lifetime visit count": 1,
+      "Lifetime event count": 9,
+      "Total time spent on site in minutes": 0,
+      "Average visit duration in minutes": 0,
+      "Weeks since first visit": 1,
+      "Average visits per week": 1,
+      "Flip Flop": 1
+    },
+    "dates": {
+      "last_visit_start_ts": 1629477648000,
+      "audience_hse_hbbtv_101_count_ts": 1629477648940,
+      "audience_hse_hbbtv_103_count_ts": 1629477654509,
+      "audience_hse_hbbtv_102_count_ts": 1629477741394,
+      "First visit": 1629477648000,
+      "Last visit": 1629477648000
+    },
+    "properties": {
+      "profile": "hbbtv",
+      "account": "hse",
+      "Lifetime devices used (favorite)": "other",
+      "Lifetime browser types used (favorite)": "other",
+      "Lifetime operating systems used (favorite)": "other",
+      "Lifetime platforms used (favorite)": "browser",
+      "Lifetime browser versions used (favorite)": "other",
+      "Channels Watched - Lifetime (favorite)": "hse24extra",
+      "Titles Watched - Lifetime (favorite)": "Maloo Fashion Pieces",
+      "Channels Watched - Last 30 days (favorite)": "hse24",
+      "Titles Watched - Last 30 days (favorite)": "La Luna Design in Silber",
+      "Last Querying Profile": "sandbox",
+      "Last Querying Visitor ID": "cookie_test38826961203350630_spoof",
+      "Last-Seen Visitor ID": "test95602537859266110_c1",
+      "Last Querying Trace ID": "bArJsPPA"
+    },
+    "audiences": [
+      "Sandbox query request - flip",
+      "All IP Addresses (Visitor Profiles)"
+    ],
+    "badges": [
+      "Unbadged"
+    ],
+    "last_visit_id": "db29fdb12286a42f73490515ed00e3f9d0217af426c7a1f4acd503c84ad63ad6"
+  }
+}
+
 describe('the addTallies function, testing for use in Tealium Functions', function () {
   it('should export without error', function () {
     exported = stringFunctions.exportNamedElements(code, ['addTalliesToEventPayload'])
   })
 
-  it('should work correctly', function () {
+  it('should work correctly with tallies', function () {
     let result = exported.addTalliesToEventPayload({'test_existing_key' : true}, exampleVisitorProfile.visitor)
     chai.expect(result).to.deep.equal({
       test_existing_key: true,
@@ -213,6 +263,13 @@ describe('the addTallies function, testing for use in Tealium Functions', functi
         1,
         1
       ],
+    })
+  })
+
+  it('should work correctly without tallies', function () {
+    let result = exported.addTalliesToEventPayload({'test_existing_key' : true}, exampleVisitorProfileNoTallies.visitor)
+    chai.expect(result).to.deep.equal({
+      test_existing_key: true
     })
   })
 
