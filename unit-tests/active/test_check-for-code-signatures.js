@@ -13,7 +13,7 @@ const code = stringFunctions.getVanillaJsFile('code/check-for-code-signatures.js
 // to share among tests
 let exported
 
-describe('the check-for-code-signatures', function () {
+describe('the check-for-code-signatures function', function () {
   it('should export without error', function () {
     const before = ''
     const after = ''
@@ -50,6 +50,42 @@ describe('the check-for-code-signatures', function () {
     const output = exported.checkForCodeSignatures(['Test'], ' myNegativeTest adkjadljaoiadja')
     chai.expect(output).to.equal(0)
   })
+
+  it('should work with periods in the search string (false)', function () {
+    const output = exported.checkForCodeSignatures(['CCM.'], 'dakfla CCMTest')
+    chai.expect(output).to.equal(0)
+  })
+
+  it('should work with periods in the search string (true)', function () {
+    const output = exported.checkForCodeSignatures(['CCM.'], 'dakfla.CCM.Test')
+    chai.expect(output).to.equal(1)
+  })
+
+  it('should work with underscores in the search string (false)', function () {
+    const output = exported.checkForCodeSignatures(['_CCM_'], 'dakfla _CCMTest')
+    chai.expect(output).to.equal(0)
+  })
+
+  it('should work with underscores in the search string (false with leading underscore)', function () {
+    const output = exported.checkForCodeSignatures(['CCM_'], 'dakfla _CCM_Test')
+    chai.expect(output).to.equal(0)
+  })
+
+  it('should work with underscores in the search string (true)', function () {
+    const output = exported.checkForCodeSignatures(['CCM_'], 'dakfla CCM_Test')
+    chai.expect(output).to.equal(1)
+  })
+
+  it('should work with hypens in the search string (false)', function () {
+    const output = exported.checkForCodeSignatures(['CCM-'], 'dakfla CCMTest')
+    chai.expect(output).to.equal(0)
+  })
+
+  it('should work with hypens in the search string (true)', function () {
+    const output = exported.checkForCodeSignatures(['CCM-'], 'dakfla CCM-Test')
+    chai.expect(output).to.equal(1)
+  })
+
 
   it('should not match unless a non-alphabetical character precedes', function () {
     const output = exported.checkForCodeSignatures(['OptanonConsent'], '{function readCookie(){var cookies=document.cookie;var cookieArray=cookies.split("; ");var valueToSend="1000";for(var i=0;i<cookieArray.length;i++){var tempArray=[];if(cookieArray[i].split("=")[0]===\'OptanonConsent\')')
