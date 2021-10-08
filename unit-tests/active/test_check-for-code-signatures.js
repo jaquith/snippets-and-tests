@@ -76,12 +76,17 @@ describe('the check-for-code-signatures function', function () {
     chai.expect(output).to.equal(1)
   })
 
-  it('should work with hypens in the search string (false)', function () {
+  it('should work with hyphens in the search string (false)', function () {
     const output = exported.checkForCodeSignatures(['CCM-'], 'dakfla CCMTest')
     chai.expect(output).to.equal(0)
   })
 
-  it('should work with hypens in the search string (true)', function () {
+  it('should work with hyphens in the search string (another false)', function () {
+    const output = exported.checkForCodeSignatures(['CCM-'], 'dakfla MY-CCM-Test')
+    chai.expect(output).to.equal(0)
+  })
+
+  it('should work with hyphens in the search string (true)', function () {
     const output = exported.checkForCodeSignatures(['CCM-'], 'dakfla CCM-Test')
     chai.expect(output).to.equal(1)
   })
