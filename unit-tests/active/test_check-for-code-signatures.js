@@ -91,10 +91,14 @@ describe('the check-for-code-signatures function', function () {
     chai.expect(output).to.equal(1)
   })
 
-
-  it('should not match unless a non-alphabetical character precedes', function () {
+  it('should match when a non-alphabetical character precedes', function () {
     const output = exported.checkForCodeSignatures(['OptanonConsent'], '{function readCookie(){var cookies=document.cookie;var cookieArray=cookies.split("; ");var valueToSend="1000";for(var i=0;i<cookieArray.length;i++){var tempArray=[];if(cookieArray[i].split("=")[0]===\'OptanonConsent\')')
     chai.expect(output).to.equal(1)
+  })
+
+  it('should not match unless a non-alphabetical character precedes', function () {
+    const output = exported.checkForCodeSignatures(['OptanonConsent'], '{function readCookie(){var cookies=document.cookie;var cookieArray=cookies.split("; ");var valueToSend="1000";for(var i=0;i<cookieArray.length;i++){var tempArray=[];if(cookieArray[i].split("=")[0]===\'aOptanonConsent\')')
+    chai.expect(output).to.equal(0)
   })
 
   it('should work on cookie checks', function () {
